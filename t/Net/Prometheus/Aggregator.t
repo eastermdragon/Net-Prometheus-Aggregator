@@ -8,6 +8,7 @@ use Net::Prometheus::Aggregator;
   is $npa->uri->scheme, 'tcp',     '$npa->uri->scheme = tcp';
   is $npa->uri->host,   '1.2.3.4', '$npa->uri->host   = 1.2.3.4';
   is $npa->uri->port,   '55',      '$npa->uri->port   = 55';
+  is $npa->proto,       'tcp',     '$npa->proto       = tcp';
 };
 
 {
@@ -16,6 +17,7 @@ use Net::Prometheus::Aggregator;
   is $npa->uri->scheme, 'tcp',       '$npa->uri->scheme = tcp';
   is $npa->uri->host,   'localhost', '$npa->uri->host   = localhost';
   is $npa->uri->port,   '8191',      '$npa->uri->port   = 8191';
+  is $npa->proto,       'tcp',     '$npa->proto       = tcp';
 }
 
 {
