@@ -11,6 +11,14 @@ use Net::Prometheus::Aggregator;
 };
 
 {
+  my $npa = Net::Prometheus::Aggregator->new('tcp:');
+  isa_ok $npa, 'Net::Prometheus::Aggregator';
+  is $npa->uri->scheme, 'tcp',       '$npa->uri->scheme = tcp';
+  is $npa->uri->host,   'localhost', '$npa->uri->host   = localhost';
+  is $npa->uri->port,   '8191',      '$npa->uri->port   = 8191';
+}
+
+{
   eval { Net::Prometheus::Aggregator->new };
   like $@, qr/uri required/, 'bad ctor, no uri';
 }
