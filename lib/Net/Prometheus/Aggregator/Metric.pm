@@ -7,7 +7,7 @@ use JSON::MaybeXS qw( encode_json );
 
 # ABSTRACT: Metric for prometheus-aggregator
 
-sub new
+sub _new
 {
   my($class, $socket, $labels, %decl) = @_;
 
@@ -53,10 +53,10 @@ package Net::Prometheus::Aggregator::Metric::Counter;
 
 use parent qw( Net::Prometheus::Aggregator::Metric );
 
-sub new {
+sub _new {
   my($class, $socket, $labels, %decl) = @_;
   $decl{type} = 'counter';
-  $class->SUPER::new($socket, $labels, %decl);
+  $class->SUPER::_new($socket, $labels, %decl);
 }
 
 *inc = \&Net::Prometheus::Aggregator::Metric::observe;
@@ -65,10 +65,10 @@ package Net::Prometheus::Aggregator::Metric::Gauge;
 
 use parent qw( Net::Prometheus::Aggregator::Metric );
 
-sub new {
+sub _new {
   my($class, $socket, $labels, %decl) = @_;
   $decl{type} = 'gauge';
-  $class->SUPER::new($socket, $labels, %decl);
+  $class->SUPER::_new($socket, $labels, %decl);
 }
 
 *set = \&Net::Prometheus::Aggregator::Metric::observe;

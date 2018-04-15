@@ -4,7 +4,9 @@ use strict;
 use warnings;
 use 5.012;
 use URI;
-use URI::tcp;
+use URI::file;
+use URI::tcp;  # ensure add as a dep
+use URI::udp;  # ensure add as a dep
 use Carp ();
 
 # ABSTRACT: Send observations to prometheus-aggregator
@@ -22,10 +24,12 @@ sub new {
     $uri = URI->new($uri);
   }
   
-  Carp::croak "uri must be of type tcp" unless $uri->scheme eq 'tcp';
+  Carp::croak "uri must be of type tcp, udp or file" unless $uri->scheme =~ qr/^(tcp|udp|file)$/;
 
-  $uri->host('localhost') unless defined $uri->host;
-  $uri->port(8191) unless defined $uri->port;
+  if($uri->scheme ne 'file') {
+    $uri->host('localhost') unless defined $uri->host;
+    $uri->port(8191) unless defined $uri->port;
+  }
 
   my $self = bless {
     uri => $uri,
@@ -39,7 +43,8 @@ sub uri {
 }
 
 sub proto {
-  'tcp';
+  my $scheme = shift->uri->scheme;
+  $scheme eq 'file' ? 'unix' : $scheme;
 }
 
 sub connect {

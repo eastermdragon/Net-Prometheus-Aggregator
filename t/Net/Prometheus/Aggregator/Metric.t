@@ -25,7 +25,7 @@ sub next_json {
 }
 
 {
-  my $npam = Net::Prometheus::Aggregator::Metric->new($socket, [],
+  my $npam = Net::Prometheus::Aggregator::Metric->_new($socket, [],
     name => "foo",
     help => "foo help",
   );
@@ -46,7 +46,7 @@ sub next_json {
 }
 
 {
-  my $npam = Net::Prometheus::Aggregator::Metric::Counter->new($socket, [qw( bar baz )],
+  my $npam = Net::Prometheus::Aggregator::Metric::Counter->_new($socket, [qw( bar baz )],
     name => "foo",
     help => "foo help",
   );
@@ -89,7 +89,7 @@ sub next_json {
 }
 
 {
-  my $npam = Net::Prometheus::Aggregator::Metric::Gauge->new($socket, [],
+  my $npam = Net::Prometheus::Aggregator::Metric::Gauge->_new($socket, [],
     name => "foo",
     help => "foo help",
   );
